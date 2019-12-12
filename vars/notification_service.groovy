@@ -51,12 +51,6 @@ def call(Map config) {
                 steps {
 	                script {
 		                checkout scm
-		                Version = "${VERSION_PREFIX}${BUILD_NUMBER}"
-		                powershell("(Get-Content -Path ${ASSEMBLY_VERSION_FILE}).replace('1.0.0.0', '${Version}') | Out-File ${ASSEMBLY_VERSION_FILE}")
-		                GIT_SHA = powershell script: "git rev-parse --short HEAD", returnStdout: true
-		                Version += "-${GIT_SHA}".trim()
-		                powershell("(Get-Content -Path ${ASSEMBLY_VERSION_FILE}).replace('INFORMATIONAL_VERSION', '${Version}') | Out-File ${ASSEMBLY_VERSION_FILE}")
-                        currentBuild.displayName = Version
 	                }
 
                 }
@@ -75,23 +69,19 @@ def call(Map config) {
                         def COMPLETE_NEXUS_PUBLISH_PACKAGE = "${NEXUS_PUBLISH_PACKAGE}\\*.nupkg"
                         def COMPLETE_CHECKMARX_PROJECT_NAME = "Speedpay_AWS_${NEXUS_PUBLISH_PACKAGE}_${TENANT}"
 
-                        println ${PROJECT_NAME}
-			println ${NEXUS_PUBLISH_REPO}
+                        println "${PROJECT_NAME}"
+			println "${NEXUS_PUBLISH_REPO}"
                     }
                 }
 	
                 post {
 		            success {
-			            Windows_Bat([
-			                cmd: "pushd ${NEXUS_PUBLISH_PACKAGE} && \
-				                ${NUGET} spec WesternUnion.Speedpay.Notification.${PROJECT_NAME} && \
-				                ${NUGET} pack WesternUnion.Speedpay.Notification.${PROJECT_NAME}.nuspec -Version ${Version} -NoPackageAnalysis && \
-				                popd"
-				    ])
+				    println "${PROJECT_NAME}"
+				    println "${NEXUS_PUBLISH_REPO}"   
 		            }
 		            
                     failure {
-                        println ${PROJECT_NAME}
+                        println "${PROJECT_NAME}"
 		    }
                 }
             }
@@ -99,11 +89,11 @@ def call(Map config) {
 
         post {
             success {
-                println ${PROJECT_NAME}
+                println "${PROJECT_NAME}"
             }
 
             failure {
-                println PROJECT_NAME
+                println "${PROJECT_NAME}"
             }
         }
 
