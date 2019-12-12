@@ -122,14 +122,7 @@ def call(Map config) {
             }
 
             failure {
-                emailext attachLog: true,
-                body: "<p>Hi Team,<br>The Build failed for :<br>[#${BUILD_NUMBER}] - ${JOB_NAME}</b><br>PFA log.<br><br>Regards,<br>DevOps Team</p>",
-                compressLog: true,
-                postsendScript: '$DEFAULT_POSTSEND_SCRIPT',
-                presendScript: '$DEFAULT_PRESEND_SCRIPT',
-                replyTo: 'grp-aci-speedpay-communicationengine-pune@aciworldwide.com',
-                subject: "NotificationService-${PROJECT_NAME}:Jenkins ${BUILD_STATUS} [#${BUILD_NUMBER}]",
-                to: 'grp-aci-speedpay-communicationengine-pune@aciworldwide.com'
+                println PROJECT_NAME
             }
         }
 
