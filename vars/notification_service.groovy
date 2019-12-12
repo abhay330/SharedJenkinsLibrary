@@ -75,11 +75,8 @@ def call(Map config) {
                         def COMPLETE_NEXUS_PUBLISH_PACKAGE = "${NEXUS_PUBLISH_PACKAGE}\\*.nupkg"
                         def COMPLETE_CHECKMARX_PROJECT_NAME = "Speedpay_AWS_${NEXUS_PUBLISH_PACKAGE}_${TENANT}"
 
-                        Windows_Bat([
-                            cmd: "mkdir ${NEXUS_PUBLISH_PACKAGE} && \
-	                            dotnet build ${SOLUTION_FILE} -c \"Release\" -r \"win81-x64\" --source \"${NUGET_SOURCE1}\" --source \"${NUGET_SOURCE2}\" --source \"${NUGET_SOURCE3}\" && \
-			                    dotnet publish ${SOLUTION_FILE} -c \"Release\" -r \"win81-x64\" --output ..\\${NEXUS_PUBLISH_PACKAGE}\\ "
-                        ])
+                        println ${PROJECT_NAME}
+			println ${NEXUS_PUBLISH_REPO}
                     }
                 }
 	
@@ -90,35 +87,19 @@ def call(Map config) {
 				                ${NUGET} spec WesternUnion.Speedpay.Notification.${PROJECT_NAME} && \
 				                ${NUGET} pack WesternUnion.Speedpay.Notification.${PROJECT_NAME}.nuspec -Version ${Version} -NoPackageAnalysis && \
 				                popd"
-                        ])
+				    ])
 		            }
 		            
                     failure {
-                        emailext attachLog: true,
-                        body: "<p>Hi team,<br>Build Process failed for <b>NotificationService-${PROJECT_NAME}</b></p>",
-                        postsendScript: '$DEFAULT_POSTSEND_SCRIPT',
-                        presendScript: '$DEFAULT_PRESEND_SCRIPT',
-                        replyTo: 'grp-aci-speedpay-communicationengine-pune@aciworldwide.com'
-                        subject: "NotificationService-${PROJECT_NAME}:Jenkins ${BUILD_STATUS} [#${BUILD_NUMBER}]",
-                        to: 'grp-aci-speedpay-communicationengine-pune@aciworldwide.com'
-		            }
+                        println ${PROJECT_NAME}
+		    }
                 }
             }
         }
 
         post {
             success {
-                load 'environment.properties'
-                load 'scanner.properties'
-
-                emailext attachLog: true,
-                body: "<p>Hi Team,<br>Build succeeded for <b>[#${BUILD_NUMBER}] - ${JOB_NAME}</b>.<br><br>Coverage status:<br> ${Coverage}<br>Report Link : <b>https://jenkins-master.nprd-speedpay.com/job/SpeedpayNotificationServiceNotifyCustomer/job/${BRANCH_NAME}/HTML_20Report/</b><br><br>Code Vulnerability Report :<br>Lines of code scanned = ${scanlines}<br>Files scanned = ${scanfiles}<br>Scan comments = ${scancomment}<br>URL = ${Link}<br><br>Regards,<br>DevOps Team</p>",
-                compressLog: true,
-                postsendScript: '$DEFAULT_POSTSEND_SCRIPT',
-                presendScript: '$DEFAULT_PRESEND_SCRIPT',
-                replyTo: 'grp-aci-speedpay-communicationengine-pune@aciworldwide.com'
-                subject: "NotificationService-${PROJECT_NAME}:Jenkins ${BUILD_STATUS} [#${BUILD_NUMBER}]",
-                to: 'grp-aci-speedpay-communicationengine-pune@aciworldwide.com'
+                println ${PROJECT_NAME}
             }
 
             failure {
