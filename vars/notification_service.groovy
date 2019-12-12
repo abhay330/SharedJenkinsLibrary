@@ -2,7 +2,7 @@ def call(Map config) {
     pipeline {
         agent {
             node {
-                label "SPDCOREJ02E1B.devspeedpay.com"
+                label master
                 customWorkspace "workspace/${env.JOB_NAME}"
             }
         }
