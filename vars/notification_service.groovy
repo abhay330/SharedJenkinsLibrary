@@ -75,7 +75,7 @@ def call(Map config) {
 				    script{
 					    def COMPLETE_CHECKMARX_PROJECT_NAME = "Speedpay_AWS_${NEXUS_PUBLISH_PACKAGE}_${TENANT}"
 				    }
-				    println "${PROJECT_NAM}"
+				    println "${PROJECT_NAME}"
 				    println "${COMPLETE_CHECKMARX_PROJECT_NAME}"
 		            }
 		            
