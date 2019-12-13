@@ -66,6 +66,7 @@ def call(Map config) {
 
                         println "${PROJECT_NAME}"
 			println "${NEXUS_PUBLISH_REPO}"
+			echo "${PROJECT_NAME}"
                     }
                 }
 	
@@ -73,6 +74,7 @@ def call(Map config) {
 		            success {
 				    println "${PROJECT_NAME}"
 				    println "${NEXUS_PUBLISH_REPO}"   
+				    echo "${PROJECT_NAME}"
 		            }
 		            
                     failure {
@@ -85,6 +87,7 @@ def call(Map config) {
         post {
             success {
                 println "${PROJECT_NAME}"
+		    echo "${PROJECT_NAME}"
             }
 
             failure {
