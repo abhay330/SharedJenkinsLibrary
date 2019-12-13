@@ -65,23 +65,18 @@ def call(Map config) {
                         def COMPLETE_CHECKMARX_PROJECT_NAME = "Speedpay_AWS_${NEXUS_PUBLISH_PACKAGE}_${TENANT}"
 
                         println "${COMPLETE_NEXUS_PUBLISH_REPO}"
-			println "${COMPLETE_NEXUS_PUBLISH_REPO}"
+			println "${COMPLETE_CHECKMARX_PROJECT_NAME}"
 			echo "${PROJECT_NAME}"
                     }
                 }
 	
                 post {
-		            success {
-				    script{
-					    def COMPLETE_CHECKMARX_PROJECT_NAME = "Speedpay_AWS_${NEXUS_PUBLISH_PACKAGE}_${TENANT}"
-				    }
+			success {
 				    println "${PROJECT_NAME}"
-				    println "${COMPLETE_CHECKMARX_PROJECT_NAME}"
-		            }
-		            
-                    failure {
-                        println "${PROJECT_NAME}"
-		    }
+		        }
+			failure {
+				println "${PROJECT_NAME}"
+			}
                 }
             }
         }
