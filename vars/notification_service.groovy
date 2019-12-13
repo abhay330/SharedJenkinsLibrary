@@ -2,7 +2,6 @@ def call(Map config) {
     pipeline {
         agent {
             node {
-                label jenkinsmaster
                 customWorkspace "workspace/${env.JOB_NAME}"
             }
         }
