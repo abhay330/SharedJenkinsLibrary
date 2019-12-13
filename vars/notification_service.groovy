@@ -1,11 +1,6 @@
 def call(Map config) {
     pipeline {
-        agent {
-            node {
-		    label any
-                customWorkspace "workspace/${env.JOB_NAME}"
-            }
-        }
+        agent any
 
         options {
             disableConcurrentBuilds()
