@@ -30,6 +30,7 @@ def call(Map config) {
             
             ASSEMBLY_VERSION_FILE = "SharedAssemblyVersion.cs"
             VERSION_PREFIX = "20.0."
+	    ABHAY = "${params.NEXUS_PUBLISH_REPO}"
             
         }
 
@@ -79,6 +80,12 @@ def call(Map config) {
 			}
                 }
             }
+	stage("TESTING")
+		steps{
+			script {
+				println "${ABHAY}"
+			}
+		}
         }
 
         post {
