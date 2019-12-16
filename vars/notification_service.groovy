@@ -31,6 +31,7 @@ def call(Map config) {
             ASSEMBLY_VERSION_FILE = "SharedAssemblyVersion.cs"
             VERSION_PREFIX = "20.0."
 	    ABHAY = "${params.NEXUS_PUBLISH_REPO}"
+	    COMPLETE_CHECKMARX_PROJECT_NAME = "Speedpay_AWS_${params.NEXUS_PUBLISH_PACKAGE}_${TENANT}"
             
         }
 
@@ -73,20 +74,15 @@ def call(Map config) {
 	
                 post {
 			success {
-				    println "${PROJECT_NAME}"
+				println "${PROJECT_NAME}"
+				println "${ABHAY}"
+				println "${COMPLETE_CHECKMARX_PROJECT_NAME}"
 		        }
 			failure {
 				println "${PROJECT_NAME}"
 			}
                 }
             }
-	stage("TESTING")
-		steps{
-			script {
-				println "${ABHAY}"
-			}
-		}
-        }
 
         post {
             success {
